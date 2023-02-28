@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1669766702 source:/home/Waldfe/Documentos/ouro/Projeto-Faculdade-C/biblioteca.c
+	<stdio.h>
+	<string.h>
+	"biblioteca.h"
+	<stdlib.h>
+
+1669766702 /home/Waldfe/Documentos/ouro/Projeto-Faculdade-C/biblioteca.h
+	<stdio.h>
+	<stdlib.h>
+
+1669769048 source:/home/Waldfe/Documentos/ouro/Projeto-Faculdade-C/main.c
+	<stdio.h>
+	<stdlib.h>
+	"biblioteca.h"
+
