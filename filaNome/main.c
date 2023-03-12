@@ -32,6 +32,7 @@ Sfila* criaNodo( Sfila *controle );
 Sfila* inserePessoa( Sfila *controle );
 Sfila* removeNodo( Sfila *controle);
 Sfila* imprimeFila( Sfila *controle );
+Sfila* reverteFila( Sfila *controle );
 
 int main( )
 {
@@ -43,27 +44,32 @@ int main( )
 
     while( valorMenu != 9 ){
         clearConsole( );
-        printf("--------main--------\n");
-        printf("1) adicionar pessoa a fila:\n");
-        printf("2) remover primeira pessoa da fila:\n");
-        printf("3) imprimir fila:\n");
-        printf("9) encerrar programa:\n");
-        printf("digite a letra relacionado ao que deseja: ");
-        scanf("%d", &valorMenu);
+        printf( "--------main--------\n" );
+        printf( "1) adicionar pessoa a fila:\n" );
+        printf( "2) remover primeira pessoa da fila:\n" );
+        printf( "3) imprimir fila:\n" );
+        printf( "4) reverter fila:\n" );
+        printf( "9) encerrar programa:\n" );
+        printf( "digite a letra relacionado ao que deseja: " );
+        scanf( "%d", &valorMenu );
 
         if( valorMenu == 1 ){
             clearConsole( );
             controle = inserePessoa( controle );
         }
 
-        if( valorMenu == 2){
+        if( valorMenu == 2 ){
             clearConsole( );
             controle = removeNodo(controle);
         }
 
-        if( valorMenu == 3){
+        if( valorMenu == 3 ){
             clearConsole( );
             controle = imprimeFila(controle);
+        }
+        if( valorMenu == 4 ){
+            clearConsole( );
+            controle = reverteFila(controle);
         }
     }
 }
@@ -118,6 +124,7 @@ Sfila* inserePessoa( Sfila *controle ){
     strcpy( ctrlnew->inicio->info.nome, nome );
     return ctrlnew;
 }
+
 Sfila* imprimeFila( Sfila *controle ){
     Fila *ctrl;
     int retorno;
@@ -135,7 +142,7 @@ Sfila* imprimeFila( Sfila *controle ){
                 printf("\n----Dados da pesssoa----\n");
                 printf("\nnome da pessoa: ");
                 puts(ctrl->info.nome);
-                printf("\nidade da pessoa: %d", ctrl->info.idade);
+                printf("\nidade da pessoa: %d\n", ctrl->info.idade);
             }
         }while(ctrl->prox != NULL);
     }
@@ -143,6 +150,7 @@ Sfila* imprimeFila( Sfila *controle ){
     scanf("%d", &retorno);
     return controle;
 }
+
 Sfila* removeNodo( Sfila *controle ){
     Fila *ctrl;
     ctrl = controle->inicio;
@@ -152,5 +160,32 @@ Sfila* removeNodo( Sfila *controle ){
     free( ctrl->prox );
     ctrl->prox = NULL;
     controle->final = ctrl;
+    return controle;
+}
+
+Sfila* reverteFila( Sfila *controle ){
+    Fila *v1;
+    Fila *v2;
+    Fila *v3;
+    Fila *ctrl;
+
+    v1 = controle->inicio;
+    v2 = controle->inicio->prox;
+    v3 = controle->inicio->prox->prox;
+
+    controle->inicio->prox->prox = controle->inicio;
+    controle->inicio->prox = NULL;
+
+    do{
+        v1 = v2;
+        v2 = v3;
+        v3 = v3->prox;
+        v2->prox = v1;
+    }while( v3 != NULL );
+
+    ctrl = controle->inicio;
+    controle->inicio = controle->final;
+    controle->final = ctrl;
+
     return controle;
 }
